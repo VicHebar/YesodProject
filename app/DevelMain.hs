@@ -6,7 +6,7 @@
 --
 -- 1. Start up GHCi
 --
--- $ stack ghci YesodProject:lib --no-load --work-dir .stack-work-devel
+-- $ stack ghci yesodSQLite:lib --no-load --work-dir .stack-work-devel
 --
 -- 2. Load this module
 --

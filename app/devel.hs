@@ -1,5 +1,5 @@
 {-# LANGUAGE PackageImports #-}
-import "YesodProject" Application (develMain)
+import "yesodSQLite" Application (develMain)
 import Prelude (IO)
 
 main :: IO ()
