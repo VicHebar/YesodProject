@@ -3,7 +3,35 @@
 # For more information, please see the documentation at:
 #   https://docs.haskellstack.org/en/stable/lock_files
 
-packages: []
+packages:
+- completed:
+    cabal-file:
+      size: 5153
+      sha256: e32a1da4f774c685807fa2cf17bbed3c44b698959e342a1ea551f3fb559540b8
+    name: esqueleto
+    version: 2.6.0
+    git: https://github.com/bitemyapp/esqueleto.git
+    pantry-tree:
+      size: 1978
+      sha256: d7540ede2b694dd33e2872125e53b146885ee61b61d3a1f0b9c8f68297ffa9c4
+    commit: 08c9b4cdf977d5bcd1baba046a007940c1940758
+  original:
+    git: https://github.com/bitemyapp/esqueleto.git
+    commit: 08c9b4cdf977d5bcd1baba046a007940c1940758
+- completed:
+    cabal-file:
+      size: 1947
+      sha256: 0471ccbebe65042938bf37fdffb5f3d60f4a75b7a0c33dae5245d118280be0c3
+    name: lucid-from-html
+    version: 0.7.0
+    git: https://github.com/alogic0/lucid-from-html.git
+    pantry-tree:
+      size: 1854
+      sha256: d26fcf8db230a34906502b71a019debd995732b92c31f89bdc20aedcf644ab81
+    commit: 3d42b8fc45be08a0697e73441e4d28483b0cef90
+  original:
+    git: https://github.com/alogic0/lucid-from-html.git
+    commit: 3d42b8fc45be08a0697e73441e4d28483b0cef90
 snapshots:
 - completed:
     size: 509471

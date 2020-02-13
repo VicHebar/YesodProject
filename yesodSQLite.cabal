@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 5143171c97dff3f5741c009c5e0e27b4667b3d3e2f5f8acfe4d19b75624fbbec
+-- hash: b767ff6478e95774e6aae083efbd46da62a80996fb474bcc4002aa6dfa7bff81
 
 name:           yesodSQLite
 version:        0.0.0
@@ -30,6 +30,7 @@ library
       Handler.Profile
       Import
       Import.NoFoundation
+      LucidTemplates.HomeTemplate
       Model
       Settings
       Settings.StaticFiles
@@ -40,6 +41,9 @@ library
   build-depends:
       aeson >=0.6 && <1.4
     , base >=4.8.2.0 && <4.9 || >=4.9.1.0 && <5
+    , blaze-builder
+    , blaze-html
+    , blaze-markup
     , bytestring >=0.9 && <0.11
     , case-insensitive
     , classy-prelude >=1.4 && <1.5
@@ -55,6 +59,8 @@ library
     , hjsmin >=0.1 && <0.3
     , http-client-tls >=0.3 && <0.4
     , http-conduit >=2.3 && <2.4
+    , lucid
+    , lucid-from-html
     , monad-control >=0.3 && <1.1
     , monad-logger >=0.3 && <0.4
     , persistent >=2.8 && <2.9
@@ -95,6 +101,9 @@ executable yesodSQLite
   build-depends:
       aeson >=0.6 && <1.4
     , base >=4.8.2.0 && <4.9 || >=4.9.1.0 && <5
+    , blaze-builder
+    , blaze-html
+    , blaze-markup
     , bytestring >=0.9 && <0.11
     , case-insensitive
     , classy-prelude >=1.4 && <1.5
@@ -110,6 +119,8 @@ executable yesodSQLite
     , hjsmin >=0.1 && <0.3
     , http-client-tls >=0.3 && <0.4
     , http-conduit >=2.3 && <2.4
+    , lucid
+    , lucid-from-html
     , monad-control >=0.3 && <1.1
     , monad-logger >=0.3 && <0.4
     , persistent >=2.8 && <2.9
@@ -153,6 +164,9 @@ test-suite yesodSQLite-test
   build-depends:
       aeson >=0.6 && <1.4
     , base >=4.8.2.0 && <4.9 || >=4.9.1.0 && <5
+    , blaze-builder
+    , blaze-html
+    , blaze-markup
     , bytestring >=0.9 && <0.11
     , case-insensitive
     , classy-prelude >=1.4 && <1.5
@@ -169,6 +183,8 @@ test-suite yesodSQLite-test
     , hspec >=2.0.0
     , http-client-tls >=0.3 && <0.4
     , http-conduit >=2.3 && <2.4
+    , lucid
+    , lucid-from-html
     , microlens
     , monad-control >=0.3 && <1.1
     , monad-logger >=0.3 && <0.4

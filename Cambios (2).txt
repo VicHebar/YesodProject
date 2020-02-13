@@ -1,0 +1,6 @@
+-quitar Shakespeare y agregamos lucid
+-stack.yaml agregamos paquetes Los de Git van aqui
+-package.yaml Todods los pakeqtes van aqui
+-Handler Home -Borramos todo 
+-routs quitamos post
+-Hompage.hmlet
