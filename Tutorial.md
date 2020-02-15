@@ -85,7 +85,9 @@ Posterior a estos pasos nos dirigiremos al directorio de nuestro proyecto, a la 
 {-# LANGUAGE ScopedTypeVariables        #-}
 ~~~
 Tras haber hecho este cambio buscaremos la línea que contenga el código:  
-`getHomeR :: Handler Html`
+``` haskell
+getHomeR :: Handler Html
+```
 Y apartir de esta línea borraremos todo el contenido del documento, obteniendo como resultado:  
 ~~~ haskell
 {-# LANGUAGE NoImplicitPrelude          #-}
@@ -116,17 +118,69 @@ Después agregaremos la siguientes líneas bajo este código:
 ~~~ haskell
 getHomeR :: Handler Html
 getHomeR = do
-  -- time <- liftIO getCurrentTime
-  -- let ftime = take 10 $ tshow time
-  -- $logWarn $ "---" ++ ftime ++ "---"
   render <- getUrlRender
-  let logOutUrl = render (AuthR LogoutR)
-  let logInUrl = render (AuthR LoginR)
   meval <- maybeAuth
   defaultLayout $ do
-    setTitle "RDATAA"
+    setTitle "Hola mundo!"
     toWidget . preEscapedToHtml . renderText $ homePage
 ~~~
+Para obtener como resultado el siguiente código en **./src/Handler/Home.hs**:  
+~~~ haskell
+{-# LANGUAGE NoImplicitPrelude          #-}
+{-# LANGUAGE DeriveDataTypeable         #-}
+{-# LANGUAGE FlexibleContexts           #-}
+{-# LANGUAGE GADTs                      #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE MultiParamTypeClasses      #-}
+{-# LANGUAGE OverloadedStrings          #-}
+{-# LANGUAGE QuasiQuotes                #-}
+{-# LANGUAGE TemplateHaskell            #-}
+{-# LANGUAGE TypeFamilies               #-}
+{-# LANGUAGE ScopedTypeVariables        #-}
+
+module Handler.Home where
+
+import Import
+import Yesod.Form.Bootstrap3 (BootstrapFormLayout (..), renderBootstrap3)
+import Text.Julius (RawJS (..))
+
+import Lucid hiding (Html, toHtml)
+import Text.Blaze.Html
+import LucidTemplates.HomeTemplate
+
+-- Define our data that will be used for creating the form.
+data FileForm = FileForm
+    { fileInfo :: FileInfo
+    , fileDescription :: Text
+    }
+
+-- This is a handler function for the GET request method on the HomeR
+-- resource pattern. All of your resource patterns are defined in
+-- config/routes
+--
+-- The majority of the code you will write in Yesod lives in these handler
+-- functions. You can spread them across multiple files if you are so
+-- inclined, or create a single monolithic file.
+getHomeR :: Handler Html
+getHomeR = do
+  render <- getUrlRender
+  meval <- maybeAuth
+  defaultLayout $ do
+    setTitle "Hola Mundo!"
+    toWidget . preEscapedToHtml . renderText $ homePage 
+
+
+~~~
+Posteriormente iremos al archivo **./config/routes**, donde podremos encontrar la línea  
+~~~ haskell
+/ HomeR GET POST
+~~~
+De la cual eliminaremos **POST** de tal suerte que obtengamos:  
+~~~ haskell
+/ HomeR GET
+~~~
+Una vez hechos todos estos cambios podremos verificar el resultado de la misma manera anterior, escribiendo en la línea de comandos, en el directorio base de nuestro proyecto: `stack exec -- yesod devel` y esto compilará la página y nos permitirá ver el resultado en **localhost**.
+
 ## Github
 
 Github es un manejador de versiones, una herramienta que nos permitirá tener un control sobre el histórico de versiones de nuestro proyecto. Además de eso, Github nos permite compartir código con distintas personas, podríamos pensar en Github como una red social de programadores. El primer paso que tomaremos será crear una cuenta en Github, y para ello accederemos a [su página](https://github.com/), una vez dentro crearemos una cuenta nueva siguiendo los pasos marcados en la página, rellenándo los campos solicitados. Una vez que esté hecha nuestra cuenta podremos empezar a crear repositorios.
