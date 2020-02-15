@@ -71,7 +71,7 @@ Guardemos los cambios hechos y nos dirigiremos al siguiente archivo, *package.ya
 ~~~
 Una vez hecho esto nos dirigiremos a este [directorio de GitHub](https://github.com/VicHebar/YesodProject/tree/master/src) y descargaremos la carpeta **LucidTemplates**, esta carpeta contiene un template específico para nuestro *Hola Mundo*, una vez desgargada la carpeta, la guardaremos en el directorio de nuestro proyecto, en la carpeta */src*.  
 Posterior a estos pasos nos dirigiremos al directorio de nuestro proyecto, a la archivo **./src/Handler/Home.hs**. Dentro de este archivo lo primero que haremos será sustituir todo el código que se encuentre antes de la línea que contiene **module Handler.Home where** por las siguientes líneas:  
-~~~
+~~~ haskell
 {-# LANGUAGE NoImplicitPrelude          #-}
 {-# LANGUAGE DeriveDataTypeable         #-}
 {-# LANGUAGE FlexibleContexts           #-}
@@ -87,7 +87,7 @@ Posterior a estos pasos nos dirigiremos al directorio de nuestro proyecto, a la 
 Tras haber hecho este cambio buscaremos la línea que contenga el código:  
 `getHomeR :: Handler Html`
 Y apartir de esta línea borraremos todo el contenido del documento, obteniendo como resultado:  
-~~~
+~~~ haskell
 {-# LANGUAGE NoImplicitPrelude          #-}
 {-# LANGUAGE DeriveDataTypeable         #-}
 {-# LANGUAGE FlexibleContexts           #-}
@@ -112,7 +112,21 @@ data FileForm = FileForm
     , fileDescription :: Text
     }
 ~~~
-
+Después agregaremos la siguientes líneas bajo este código:  
+~~~ haskell
+getHomeR :: Handler Html
+getHomeR = do
+  -- time <- liftIO getCurrentTime
+  -- let ftime = take 10 $ tshow time
+  -- $logWarn $ "---" ++ ftime ++ "---"
+  render <- getUrlRender
+  let logOutUrl = render (AuthR LogoutR)
+  let logInUrl = render (AuthR LoginR)
+  meval <- maybeAuth
+  defaultLayout $ do
+    setTitle "RDATAA"
+    toWidget . preEscapedToHtml . renderText $ homePage
+~~~
 ## Github
 
 Github es un manejador de versiones, una herramienta que nos permitirá tener un control sobre el histórico de versiones de nuestro proyecto. Además de eso, Github nos permite compartir código con distintas personas, podríamos pensar en Github como una red social de programadores. El primer paso que tomaremos será crear una cuenta en Github, y para ello accederemos a [su página](https://github.com/), una vez dentro crearemos una cuenta nueva siguiendo los pasos marcados en la página, rellenándo los campos solicitados. Una vez que esté hecha nuestra cuenta podremos empezar a crear repositorios.
