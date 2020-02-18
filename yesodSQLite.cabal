@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: b767ff6478e95774e6aae083efbd46da62a80996fb474bcc4002aa6dfa7bff81
+-- hash: 7b73805a1a957bf32f362a988e201e953c8f0dacda8ab627d46a38706fa36615
 
 name:           yesodSQLite
 version:        0.0.0
@@ -31,7 +31,8 @@ library
       Import
       Import.NoFoundation
       LucidTemplates.HomeTemplate
-      Model
+      Models.Model
+      Models.ModelElement
       Settings
       Settings.StaticFiles
   other-modules:
@@ -67,6 +68,7 @@ library
     , persistent-sqlite >=2.8 && <2.9
     , persistent-template >=2.5 && <2.9
     , safe
+    , scientific
     , shakespeare >=2.0 && <2.1
     , template-haskell
     , text >=0.11 && <2.0
@@ -127,6 +129,7 @@ executable yesodSQLite
     , persistent-sqlite >=2.8 && <2.9
     , persistent-template >=2.5 && <2.9
     , safe
+    , scientific
     , shakespeare >=2.0 && <2.1
     , template-haskell
     , text >=0.11 && <2.0
@@ -192,6 +195,7 @@ test-suite yesodSQLite-test
     , persistent-sqlite >=2.8 && <2.9
     , persistent-template >=2.5 && <2.9
     , safe
+    , scientific
     , shakespeare >=2.0 && <2.1
     , template-haskell
     , text >=0.11 && <2.0

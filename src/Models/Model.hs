@@ -7,7 +7,7 @@
 {-# LANGUAGE OverloadedStrings          #-}
 {-# LANGUAGE TemplateHaskell            #-}
 {-# LANGUAGE TypeFamilies               #-}
-module Model where
+module Models.Model where
 
 import ClassyPrelude.Yesod
 import Database.Persist.Quasi
