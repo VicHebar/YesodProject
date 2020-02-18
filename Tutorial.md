@@ -1,14 +1,16 @@
-# GuÌa para configurar Yesod.
+# Gu√≠a para configurar Yesod.
 
-Esta es una guÌa detallada con pasos sencillos para configurar una computadora con el fin de hacer uso de Yesod.
-AcontinuaciÛn se enlistan las secciones que contendr· la lista:
+Esta es una gu√≠a detallada con pasos sencillos para configurar una computadora con el fin de hacer uso de Yesod.
+Acontinuaci√≥n se enlistan las secciones que contendr√° la lista:
 
 1. Obtener e instalar Stack.
 2. Stack Templates
 3. Crear un Proyecto con Stack
-4. Compilar nuesta primera p·gina con yesod
-    - Primera p·gina
-    - Modificando nuestra primera p·gina
+4. Compilar nuesta primera p√°gina con yesod
+    - Primera p√°gina
+    - Modificando nuestra primera p√°gina
+5. Nuestra segunda p√°gina
+    - Una Base de Datos
 5. Obtener Git
 6. Github
 7. Crear un repositorio en Github
@@ -17,43 +19,43 @@ AcontinuaciÛn se enlistan las secciones que contendr· la lista:
 
 ## Obtener e instalar Stack
 
-El primer paso a seguir es obtener Stack y para ello tendremos que dirigirnos a una explorador e ingresar a [la pagina de Stack](www.haskellstack.org) en donde podr·s encontrar le encabezado **How to install** e inmediatamente despuÈs de ese encabezado encontrar·s un enlace para descargar el instalador para windows marcado como **Windows 64-bit installer** . DespuÈs de que la instalaciÛn haya finalizado lo siguiente ser· realizar la instalaciÛn.  
-Al abrir el instalador de Stack nos permitir· seleccionar la ruta donde deseemos instalar Stack, por lo general se dejar· la ruta que viene especificada por el instalador, acontinuaciÛn seleccionaremos la opciÛn *Next*. En la siguiente pantalla que aparecer· nos permitir· seleccionar los componentes a instalar, por defecto vienen marcadas todas, habremos de dejarlas asÌ y seleccionaremos la opciÛn *Install*. AsÌ al finalizar tendremos Stack instalado en la computadora, listo para ser ejecutado en cualquier linea de comando desde cualquir directorio. Para verificar esto tendremos que abrir una linea de comandos y escribir la linea *stack --version*, como resultado la linea de comandos nos arrojar· la versiÛn actual de stack. Para acceder a la linea de comandos utilizaremos la combinaciÛn de teclas Win + r, nos abrir· una ventana de ejecuciÛn, en ella escribiremos la palabra *cmd* y daremos la opciÛn *aceptar*.
+El primer paso a seguir es obtener Stack y para ello tendremos que dirigirnos a una explorador e ingresar a [la pagina de Stack](www.haskellstack.org) en donde podr√°s encontrar le encabezado **How to install** e inmediatamente despu√©s de ese encabezado encontrar√°s un enlace para descargar el instalador para windows marcado como **Windows 64-bit installer** . Despu√©s de que la instalaci√≥n haya finalizado lo siguiente ser√° realizar la instalaci√≥n.  
+Al abrir el instalador de Stack nos permitir√° seleccionar la ruta donde deseemos instalar Stack, por lo general se dejar√° la ruta que viene especificada por el instalador, acontinuaci√≥n seleccionaremos la opci√≥n *Next*. En la siguiente pantalla que aparecer√° nos permitir√° seleccionar los componentes a instalar, por defecto vienen marcadas todas, habremos de dejarlas as√≠ y seleccionaremos la opci√≥n *Install*. As√≠ al finalizar tendremos Stack instalado en la computadora, listo para ser ejecutado en cualquier linea de comando desde cualquir directorio. Para verificar esto tendremos que abrir una linea de comandos y escribir la linea *stack --version*, como resultado la linea de comandos nos arrojar√° la versi√≥n actual de stack. Para acceder a la linea de comandos utilizaremos la combinaci√≥n de teclas Win + r, nos abrir√° una ventana de ejecuci√≥n, en ella escribiremos la palabra *cmd* y daremos la opci√≥n *aceptar*.
 
 ## Stack Templates
 
-Los Templates de Stack son plantillas para desarrollar proyectos de determinados tipos o estilos, puede o no agregarse un template a un proyecto. La finalidad de usar un template es facilitar el trabajo usando ciertas pautas establecidas para proyectos de un mismo tipo. Los templates de stack est·n almacenados en archivos *.hsfiles*, puedes verificar los templates para proyectos de stack en [este repositorio de github](https://github.com/commercialhaskell/stack-templates), para efectos de esta guÌa usaremos el template *yesod-sqlite.hsfiles*
+Los Templates de Stack son plantillas para desarrollar proyectos de determinados tipos o estilos, puede o no agregarse un template a un proyecto. La finalidad de usar un template es facilitar el trabajo usando ciertas pautas establecidas para proyectos de un mismo tipo. Los templates de stack est√°n almacenados en archivos *.hsfiles*, puedes verificar los templates para proyectos de stack en [este repositorio de github](https://github.com/commercialhaskell/stack-templates), para efectos de esta gu√≠a usaremos el template *yesod-sqlite.hsfiles*
 
 ## Crear un Proyecto con Stack
 
-Una vez que tenemos Stack instalado en la computadora podremos empezar a trabajar y para ello hemos de **crear proyectos**. Para la creaciÛn de proyectos en stack hemos de utilizar la consola de comandos, al abrir una consola de comandos nos dirigiremos a la hubicaciÛn donde querramos almacenar la carpeta del proyecto, haremos esto usando la funciÛn **cd** que ya nos provee la consola de comandos, al escribir cd, un espacio, y posterior la direcciÛn a la que querramos dirijirnos, por ejemplo `C:\\Users\\Usuario> cd C:\\Users\\Usuario\\alguna_Direccion`.  
-Una vez en el directorio deseado ejecutaremos el comando `stack new mi-proyecto algun-Template`, donde *mi-proyecto* ser· sustituido con el nombre que desees darle a tu nuevo proyecto y *algun-Template* ser· remplazado por el Template que desees usar y se usar· unicamente el nombre del template, sin la terminaciÛ *.hsfiles*, en el caso de esta GuÌa usaremos el template de **yesod-sqlite**.  
-Una vez que se tenga escrito el comando completo y en la ubicaciÛn deseada se dar· enter y comezar· a preparar todo con la configuraciÛn del template elegido, al finalizar podremos leer la ultima frase como **All done** lo que nos indicar· que todo se ha concluido con Èxito. DespuÈs tendremos que hacer el setup de nuestro proyecto y para ello nos moveremos a la carpeta que se ha generado tras haber creado nuestro proyecto, para hacer esto haremos uso nuevamente de la funciÛn **cd** de la siguiente manera `cd mi-proyecto` donde *mi-proyecto* es el nombre que habÌamos elejido previamente. Una vez en el directorio de nuestro proyecto escribiremos la siguiente instrucciÛn `stack setup`, esta instrucciÛn descargar· el compilador en la versiÛn que sea necesaria para el proyecto en caso de que no se encuentre ya en el sistema.  
-Finalmente escribiremos la instrucciÛn `stack build`, que compila los archivos generados anteriormente y termina de construir el minimo proyecto.
+Una vez que tenemos Stack instalado en la computadora podremos empezar a trabajar y para ello hemos de **crear proyectos**. Para la creaci√≥n de proyectos en stack hemos de utilizar la consola de comandos, al abrir una consola de comandos nos dirigiremos a la hubicaci√≥n donde querramos almacenar la carpeta del proyecto, haremos esto usando la funci√≥n **cd** que ya nos provee la consola de comandos, al escribir cd, un espacio, y posterior la direcci√≥n a la que querramos dirijirnos, por ejemplo `C:\\Users\\Usuario> cd C:\\Users\\Usuario\\alguna_Direccion`.  
+Una vez en el directorio deseado ejecutaremos el comando `stack new mi-proyecto algun-Template`, donde *mi-proyecto* ser√° sustituido con el nombre que desees darle a tu nuevo proyecto y *algun-Template* ser√° remplazado por el Template que desees usar y se usar√° unicamente el nombre del template, sin la terminaci√≥ *.hsfiles*, en el caso de esta Gu√≠a usaremos el template de **yesod-sqlite**.  
+Una vez que se tenga escrito el comando completo y en la ubicaci√≥n deseada se dar√° enter y comezar√° a preparar todo con la configuraci√≥n del template elegido, al finalizar podremos leer la ultima frase como **All done** lo que nos indicar√° que todo se ha concluido con √©xito. Despu√©s tendremos que hacer el setup de nuestro proyecto y para ello nos moveremos a la carpeta que se ha generado tras haber creado nuestro proyecto, para hacer esto haremos uso nuevamente de la funci√≥n **cd** de la siguiente manera `cd mi-proyecto` donde *mi-proyecto* es el nombre que hab√≠amos elejido previamente. Una vez en el directorio de nuestro proyecto escribiremos la siguiente instrucci√≥n `stack setup`, esta instrucci√≥n descargar√° el compilador en la versi√≥n que sea necesaria para el proyecto en caso de que no se encuentre ya en el sistema.  
+Finalmente escribiremos la instrucci√≥n `stack build`, que compila los archivos generados anteriormente y termina de construir el minimo proyecto.
 
-## Compilar nuesta primera p·gina con yesod
+## Compilar nuesta primera p√°gina con yesod
 
-### Primera p·gina
+### Primera p√°gina
 
-Yesod, por defecto, nos entrega una primera p·gina compilada tras haber completado los pasos anteriores, para poder ejecutarla escribiremos la siguiente linea en una linea de comandos en el directorio raÌz de nuestro proyecto,  
+Yesod, por defecto, nos entrega una primera p√°gina compilada tras haber completado los pasos anteriores, para poder ejecutarla escribiremos la siguiente linea en una linea de comandos en el directorio ra√≠z de nuestro proyecto,  
 `stack exec -- yesod devel`  
-La consola comenzar· a compilar nuestro proyecto, al finalizar, en las ultimas dos lÌneas que imprimir· podremos leer  
+La consola comenzar√° a compilar nuestro proyecto, al finalizar, en las ultimas dos l√≠neas que imprimir√° podremos leer  
 ~~~
 Starting devel application
 Devel application launched: http://localhost:port
 ~~~
-Donde port ser· el puerto donde se ejecutar·, al ir anuestro navegador y escribir esta ultima direcciÛn en la barra de direcciones podremos visualizar la p·gina que Yesod ha construido para nosotros.
+Donde port ser√° el puerto donde se ejecutar√°, al ir anuestro navegador y escribir esta ultima direcci√≥n en la barra de direcciones podremos visualizar la p√°gina que Yesod ha construido para nosotros.
 
-### Modificando nuestra primera p·gina
+### Modificando nuestra primera p√°gina
 
-El primer cambio que le haremos a nuestra p·gina ser· poder hacer un *Hola mundo* a partir del codigo generado por Yesod y un poco de cÛdigo extra que podr·s encontrar en este repositorio de GitHub. El primer paso ser· acceder a la carpeta de nuestro proyecto y encontrar los archivos **stack.yaml** y **package.yaml**. Primero accedamos a *stack.yaml*, dentro de este archivo encontremos la lÌnea en la que se puede leer *# extra-deps:* que por lo general se encuentra en la lÌnea 37, en esta lÌnea quitaremos el sÌmbolo *#* y el espacio, de tal manera que obtengamos *extra-deps:* daremos un enter y escribiremos las siguientes lÌneas:  
+El primer cambio que le haremos a nuestra p√°gina ser√° poder hacer un *Hola mundo* a partir del codigo generado por Yesod y un poco de c√≥digo extra que podr√°s encontrar en este repositorio de GitHub. El primer paso ser√° acceder a la carpeta de nuestro proyecto y encontrar los archivos **stack.yaml** y **package.yaml**. Primero accedamos a *stack.yaml*, dentro de este archivo encontremos la l√≠nea en la que se puede leer *# extra-deps:* que por lo general se encuentra en la l√≠nea 37, en esta l√≠nea quitaremos el s√≠mbolo *#* y el espacio, de tal manera que obtengamos *extra-deps:* daremos un enter y escribiremos las siguientes l√≠neas:  
 ~~~
   - git: https://github.com/bitemyapp/esqueleto.git
     commit: 08c9b4cdf977d5bcd1baba046a007940c1940758
   - git: https://github.com/alogic0/lucid-from-html.git
     commit: 3d42b8fc45be08a0697e73441e4d28483b0cef90
 ~~~
-De tal manera que obtendremos las siguientes lÌneas:  
+De tal manera que obtendremos las siguientes l√≠neas:  
 ~~~
 extra-deps:
   - git: https://github.com/bitemyapp/esqueleto.git
@@ -61,7 +63,7 @@ extra-deps:
   - git: https://github.com/alogic0/lucid-from-html.git
     commit: 3d42b8fc45be08a0697e73441e4d28483b0cef90
 ~~~
-Guardemos los cambios hechos y nos dirigiremos al siguiente archivo, *package.yaml*. Al acceder a este archivo ubicaremos la lÌnea en la que se puede leer *dependencies:* generalmente en la lÌnea 4, que es precedido por multiples dependecias bajo la sitaxis *- dependencia ver-min ver-max*, ubicaremos la ultima dependencia e inmediatamente despues de ella podremos las siguientes dependencias:  
+Guardemos los cambios hechos y nos dirigiremos al siguiente archivo, *package.yaml*. Al acceder a este archivo ubicaremos la l√≠nea en la que se puede leer *dependencies:* generalmente en la l√≠nea 4, que es precedido por multiples dependecias bajo la sitaxis *- dependencia ver-min ver-max*, ubicaremos la ultima dependencia e inmediatamente despues de ella podremos las siguientes dependencias:  
 ~~~
 - lucid
 - lucid-from-html
@@ -69,8 +71,8 @@ Guardemos los cambios hechos y nos dirigiremos al siguiente archivo, *package.ya
 - blaze-builder
 - blaze-markup
 ~~~
-Una vez hecho esto nos dirigiremos a este [directorio de GitHub](https://github.com/VicHebar/YesodProject/tree/master/src) y descargaremos la carpeta **LucidTemplates**, esta carpeta contiene un template especÌfico para nuestro *Hola Mundo*, una vez desgargada la carpeta, la guardaremos en el directorio de nuestro proyecto, en la carpeta */src*.  
-Posterior a estos pasos nos dirigiremos al directorio de nuestro proyecto, a la archivo **./src/Handler/Home.hs**. Dentro de este archivo lo primero que haremos ser· sustituir todo el cÛdigo que se encuentre antes de la lÌnea que contiene **module Handler.Home where** por las siguientes lÌneas:  
+Una vez hecho esto nos dirigiremos a este [directorio de GitHub](https://github.com/VicHebar/YesodProject/tree/master/src) y descargaremos la carpeta **LucidTemplates**, esta carpeta contiene un template espec√≠fico para nuestro *Hola Mundo*, una vez desgargada la carpeta, la guardaremos en el directorio de nuestro proyecto, en la carpeta */src*.  
+Posterior a estos pasos nos dirigiremos al directorio de nuestro proyecto, a la archivo **./src/Handler/Home.hs**. Dentro de este archivo lo primero que haremos ser√° sustituir todo el c√≥digo que se encuentre antes de la l√≠nea que contiene **module Handler.Home where** por las siguientes l√≠neas:  
 ~~~ haskell
 {-# LANGUAGE NoImplicitPrelude          #-}
 {-# LANGUAGE DeriveDataTypeable         #-}
@@ -84,11 +86,11 @@ Posterior a estos pasos nos dirigiremos al directorio de nuestro proyecto, a la 
 {-# LANGUAGE TypeFamilies               #-}
 {-# LANGUAGE ScopedTypeVariables        #-}
 ~~~
-Tras haber hecho este cambio buscaremos la lÌnea que contenga el cÛdigo:  
+Tras haber hecho este cambio buscaremos la l√≠nea que contenga el c√≥digo:  
 ``` haskell
 getHomeR :: Handler Html
 ```
-Y apartir de esta lÌnea borraremos todo el contenido del documento, obteniendo como resultado:  
+Y apartir de esta l√≠nea borraremos todo el contenido del documento, obteniendo como resultado:  
 ~~~ haskell
 {-# LANGUAGE NoImplicitPrelude          #-}
 {-# LANGUAGE DeriveDataTypeable         #-}
@@ -114,7 +116,7 @@ data FileForm = FileForm
     , fileDescription :: Text
     }
 ~~~
-DespuÈs agregaremos la siguientes lÌneas bajo este cÛdigo:  
+Despu√©s agregaremos la siguientes l√≠neas bajo este c√≥digo:  
 ~~~ haskell
 getHomeR :: Handler Html
 getHomeR = do
@@ -124,7 +126,7 @@ getHomeR = do
     setTitle "Hola mundo!"
     toWidget . preEscapedToHtml . renderText $ homePage
 ~~~
-Para obtener como resultado el siguiente cÛdigo en **./src/Handler/Home.hs**:  
+Para obtener como resultado el siguiente c√≥digo en **./src/Handler/Home.hs**:  
 ~~~ haskell
 {-# LANGUAGE NoImplicitPrelude          #-}
 {-# LANGUAGE DeriveDataTypeable         #-}
@@ -171,7 +173,7 @@ getHomeR = do
 
 
 ~~~
-Posteriormente iremos al archivo **./config/routes**, donde podremos encontrar la lÌnea  
+Posteriormente iremos al archivo **./config/routes**, donde podremos encontrar la l√≠nea  
 ~~~ haskell
 / HomeR GET POST
 ~~~
@@ -179,18 +181,193 @@ De la cual eliminaremos **POST** de tal suerte que obtengamos:
 ~~~ haskell
 / HomeR GET
 ~~~
-Una vez hechos todos estos cambios podremos verificar el resultado de la misma manera anterior, escribiendo en la lÌnea de comandos, en el directorio base de nuestro proyecto: `stack exec -- yesod devel` y esto compilar· la p·gina y nos permitir· ver el resultado en **localhost**.
+Una vez hechos todos estos cambios podremos verificar el resultado de la misma manera anterior, escribiendo en la l√≠nea de comandos, en el directorio base de nuestro proyecto: `stack exec -- yesod devel` y esto compilar√° la p√°gina y nos permitir√° ver el resultado en **localhost**.
+
+## Nuestra segunda p√°gina
+
+### Una base de datos
+
+Para crear una base de datos primero hemos de dise√±ar la estructura de la base de datos, para ello pensaremos en dos tablas que inicialmente van a contener a los clientes y otra que va a contener algunos par√°metros que los clientes deseen compartir en la p√°gina. A estas tablas las llamaremos **Customer** y **Parameters** respectivamente.  
+El formato de la tabla contendr√° para Costumers los siguientes campos:  
+- email Text
+- id Int
+- nombre Text
+- password Text Maybe
+Y para Parameters los siguientes:  
+- par (Map Text Scientific)
+- author ident
+- alias Text
+- elements [Element]
+
+### Creando un los tipos necesarios
+
+Para crear los tipos que vamos a estar usando para la creaci√≥n de la base de datos contemplaremos dos nuevos tipos, los cuales ser√°n: **Lvl** y **Element** que simplemente representar√°n los niveles de energ√≠a y los elementos de la tabla peri√≥dica. Para su creaci√≥n primero tendremos que crear un directorio espec√≠fico en el cu√°l iremos almacenando dichos tipos. Para ello nos dirigiremos al directorio `./src` y dentro de este directorio crearemos un nuevo directorio llamado Models y moveremos el archivo `./src/Model.hs` a `./src/Models/Model.hs` y dentro de este mismo directorio crearemos un archivo llamado **ModelElement.hs** en el cual definiremos nuestros tipos, el archivo contendr√° lo siguiente:
+~~~ haskell
+{-# LANGUAGE DeriveGeneric   #-}
+{-# LANGUAGE TemplateHaskell #-}
+
+module Models.ModelElement where
+
+import Database.Persist.TH
+
+data Lvl = S1
+         | S2
+         | P2
+         | S3
+         | P3
+         | D3
+         | S4
+         | P4
+         | D4
+         | F4
+         | S5
+         | P5
+         | D5
+         | F5
+         | S6
+         | P6
+         | D6
+         | F6
+         | S7
+         | P7
+         | D7
+         | F7
+  deriving (Show, Read, Eq, Ord)
+derivePersistField "Lvl"
+
+data Element = H Lvl
+             | He Lvl
+             | Li Lvl
+             | Be Lvl
+             | B Lvl
+             | C Lvl
+             | N Lvl
+             | O Lvl
+             | F Lvl
+             | Ne Lvl
+             | Na Lvl
+             | Mg Lvl
+             | Al Lvl
+             | Si Lvl
+             | P Lvl
+             | S Lvl
+             | Cl Lvl
+             | Ar Lvl
+             | K Lvl
+             | Ca Lvl
+             | Sc Lvl
+             | Ti Lvl
+             | V Lvl
+             | Cr Lvl
+             | Mn Lvl
+             | Fe Lvl
+             | Co Lvl
+             | Ni Lvl
+             | Cu Lvl
+             | Zn Lvl
+             | Ga Lvl
+             | Ge Lvl
+             | As Lvl
+             | Se Lvl
+             | Br Lvl
+             | Kr Lvl
+             | Rb Lvl
+             | Sr Lvl
+             | Y Lvl
+             | Zr Lvl
+             | Nb Lvl
+             | Mo Lvl
+             | Tc Lvl
+             | Ru Lvl
+             | Rh Lvl
+             | Pd Lvl
+             | Ag Lvl
+             | Cd Lvl
+             | In Lvl
+             | Sn Lvl
+             | Sb Lvl
+             | Te Lvl
+             | I Lvl
+             | Xe Lvl
+             | Cs Lvl
+             | Ba Lvl
+             | Lu Lvl
+             | Hf Lvl
+             | Ta Lvl
+             | W Lvl
+             | Re Lvl
+             | Os Lvl
+             | Ir Lvl
+             | Pt Lvl
+             | Au Lvl
+             | Hg Lvl
+             | Tl Lvl
+             | Pb Lvl
+             | Bi Lvl
+             | Po Lvl
+             | At Lvl
+             | Rn Lvl
+             | Fr Lvl
+             | Ra Lvl
+             | Lr Lvl
+             | Rf Lvl
+             | Db Lvl
+             | Sg Lvl
+             | Bh Lvl
+             | Hs Lvl
+             | Mt Lvl
+             | Ds Lvl
+             | Rg Lvl
+             | Cn Lvl
+             | Nh Lvl
+             | Fl Lvl
+             | Mc Lvl
+             | Lv Lvl
+             | Ts Lvl
+             | Og Lvl
+             | La Lvl
+             | Ce Lvl
+             | Pr Lvl
+             | Nd Lvl
+             | Pm Lvl
+             | Sm Lvl
+             | Eu Lvl
+             | Gd Lvl
+             | Tb Lvl
+             | Dy Lvl
+             | Ho Lvl
+             | Er Lvl
+             | Tm Lvl
+             | Yb Lvl
+             | Ac Lvl
+             | Th Lvl
+             | Pa Lvl
+             | U Lvl
+             | Np Lvl
+             | Pu Lvl
+             | Am Lvl
+             | Cm Lvl
+             | Bk Lvl
+             | Cf Lvl
+             | Es Lvl
+             | Fm Lvl
+             | Md Lvl
+             | No Lvl
+  deriving (Show, Read, Eq, Ord)
+derivePersistField "Element"
+~~~
+Y, de nuevo se encontrar√° en `./src/Models/ModelElement.hs`
 
 ## Github
 
-Github es un manejador de versiones, una herramienta que nos permitir· tener un control sobre el histÛrico de versiones de nuestro proyecto. Adem·s de eso, Github nos permite compartir cÛdigo con distintas personas, podrÌamos pensar en Github como una red social de programadores. El primer paso que tomaremos ser· crear una cuenta en Github, y para ello accederemos a [su p·gina](https://github.com/), una vez dentro crearemos una cuenta nueva siguiendo los pasos marcados en la p·gina, rellen·ndo los campos solicitados. Una vez que estÈ hecha nuestra cuenta podremos empezar a crear repositorios.
+Github es un manejador de versiones, una herramienta que nos permitir√° tener un control sobre el hist√≥rico de versiones de nuestro proyecto. Adem√°s de eso, Github nos permite compartir c√≥digo con distintas personas, podr√≠amos pensar en Github como una red social de programadores. El primer paso que tomaremos ser√° crear una cuenta en Github, y para ello accederemos a [su p√°gina](https://github.com/), una vez dentro crearemos una cuenta nueva siguiendo los pasos marcados en la p√°gina, rellen√°ndo los campos solicitados. Una vez que est√© hecha nuestra cuenta podremos empezar a crear repositorios.
 
 ## Crear un Repositorio en Github
 
-Cuando la cuenta estÈ creada inmediatamente tendremos en pantlla una p·gina con un encabezado llamado **Create a new repository**, (en caso de que al iniciar no te aparezca esta pantalla siempre puedes entrar en la opciÛn **New**, en la secciÛn **Repositories**), en esta pantalla lo ˙nico que ncesitas es especificar un nombre para tu repositorio despuÈs de eso especifica si tu repositorio ser· p˙blico oprivado, para finalizar selecciona la opciÛn **Create Repository**.
+Cuando la cuenta est√© creada inmediatamente tendremos en pantlla una p√°gina con un encabezado llamado **Create a new repository**, (en caso de que al iniciar no te aparezca esta pantalla siempre puedes entrar en la opci√≥n **New**, en la secci√≥n **Repositories**), en esta pantalla lo √∫nico que ncesitas es especificar un nombre para tu repositorio despu√©s de eso especifica si tu repositorio ser√° p√∫blico oprivado, para finalizar selecciona la opci√≥n **Create Repository**.
 
 ## Enlazar tu proyecto con Github
 
-Una vez estÈ creado tu repositorio el siguiente paso es enlazarlo y para ello haremos uso de Git. Tr·s crear el repositorio podremos 
+Una vez est√© creado tu repositorio el siguiente paso es enlazarlo y para ello haremos uso de Git. Tr√°s crear el repositorio podremos 
 
 
