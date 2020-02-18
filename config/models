@@ -7,10 +7,10 @@ Customer
     UniqueUser ident
     deriving Typeable
 Parameter
-    par (Map Text Scientific)
-    author ident
+    par (Map Text Double)
+    author (CustomerId)
     alias Text
-    elements [Element]
+    elements [Element Void]
 -- User
 --     ident Text
 --     password Text Maybe

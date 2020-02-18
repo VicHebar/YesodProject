@@ -30,7 +30,7 @@ data Lvl = S1
   deriving (Show, Read, Eq, Ord)
 derivePersistField "Lvl"
 
-data Element = H Lvl
+data Element a = H Lvl
              | He Lvl
              | Li Lvl
              | Be Lvl
