@@ -1,4 +1,4 @@
-name:    yesodSQLite
+name:    YesodProject
 version: "0.0.0"
 
 dependencies:
@@ -18,7 +18,7 @@ dependencies:
 - bytestring >=0.9 && <0.11
 - text >=0.11 && <2.0
 - persistent >=2.8 && <2.9
-- persistent-sqlite >=2.8 && <2.9
+- persistent-postgresql >=2.8 && <2.9
 - persistent-template >=2.5 && <2.9
 - template-haskell
 - shakespeare >=2.0 && <2.1
@@ -45,12 +45,6 @@ dependencies:
 - case-insensitive
 - wai
 - foreign-store
-- lucid
-- lucid-from-html
-- blaze-html
-- blaze-builder
-- blaze-markup
-- scientific
 
 # The library contains all of our application code. The executable
 # defined below is just a thin wrapper.
@@ -72,7 +66,7 @@ library:
 
 # Runnable executable for our application
 executables:
-  yesodSQLite:
+  YesodProject:
     main: main.hs
     source-dirs: app
     ghc-options:
@@ -80,22 +74,21 @@ executables:
     - -rtsopts
     - -with-rtsopts=-N
     dependencies:
-    - yesodSQLite
+    - YesodProject
     when:
     - condition: flag(library-only)
       buildable: false
 
 # Test suite
 tests:
-  yesodSQLite-test:
+  YesodProject-test:
     main: Spec.hs
     source-dirs: test
     ghc-options: -Wall
     dependencies:
-    - yesodSQLite
+    - YesodProject
     - hspec >=2.0.0
     - yesod-test
-    - microlens
 
 # Define flags used by "yesod devel" to make compilation faster
 flags:

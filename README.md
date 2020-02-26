@@ -1,3 +1,13 @@
+## Database Setup
+
+After installing Postgres, run:
+
+```
+createuser YesodProject --password YesodProject --superuser
+createdb YesodProject
+createdb YesodProject_test
+```
+
 ## Haskell Setup
 
 1. If you haven't already, [install Stack](https://haskell-lang.org/get-started)
@@ -20,7 +30,7 @@ As your code changes, your site will be automatically recompiled and redeployed 
 ## Tests
 
 ```
-stack test --flag yesodSQLite:library-only --flag yesodSQLite:dev
+stack test --flag YesodProject:library-only --flag YesodProject:dev
 ```
 
 (Because `yesod devel` passes the `library-only` and `dev` flags, matching those flags means you don't need to recompile between tests and development, and it disables optimization to speed up your test compile times).
