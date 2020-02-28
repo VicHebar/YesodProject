@@ -7,10 +7,12 @@
 {-# LANGUAGE OverloadedStrings          #-}
 {-# LANGUAGE TemplateHaskell            #-}
 {-# LANGUAGE TypeFamilies               #-}
-module Model where
+module Models.Model where
 
 import ClassyPrelude.Yesod
 import Database.Persist.Quasi
+import Models.ModelElement
+--import Data.Scientific
 
 -- You can define all of your database entities in the entities file.
 -- You can find more information on persistent and how to declare entities

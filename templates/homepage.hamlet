@@ -78,14 +78,14 @@
                             Upload it!
 
 
-            <div .col-lg-4.col-lg-offset-1>
-                <div .bs-callout.bs-callout-info.upload-response>
+            <!-- <div .col-lg-4.col-lg-offset-1> -->
+            <!--     <div .bs-callout.bs-callout-info.upload-response> -->
 
-                    $maybe (FileForm info con) <- submission
-                        Your file type is <em>#{fileContentType info}</em>. You say it has: <em>#{con}</em>
+            <!--         $maybe (FileForm info con) <- submission -->
+            <!--             Your file type is <em>#{fileContentType info}</em>. You say it has: <em>#{con}</em> -->
 
-                    $nothing
-                        File upload result will be here...
+            <!--         $nothing -->
+            <!--             File upload result will be here... -->
 
 
     <hr>

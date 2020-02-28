@@ -10,6 +10,7 @@ haskell.lib.buildStackProject {
                   haskellPackages.yesod-bin
                   msmtp
                   gmp
+                  git
                 ];
   inherit ghc;
 }
