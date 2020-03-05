@@ -11,18 +11,12 @@ Parameter
     author (CustomerId)
     alias Text
     elements [Models.ModelElement.Element]
--- User
---     ident Text
---     password Text Maybe
---     UniqueUser ident
---     deriving Typeable
--- Email
---     email Text
---     userId UserId Maybe
---     verkey Text Maybe
---     UniqueEmail email
--- Comment json -- Adding "json" causes ToJSON and FromJSON instances to be derived.
---     message Text
---     userId UserId Maybe
---     deriving Eq
---     deriving Show
+Post
+    p ParameterId
+    a CustomerId
+    d UTCTime
+    c [Comment]
+Comment
+    a CustomerId
+    d UTCTime
+    t Text
