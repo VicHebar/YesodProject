@@ -16,7 +16,7 @@ import Lucid hiding (Html, toHtml)
 import Text.Blaze.Html
 import LucidTemplates.HomeTemplate
 import qualified Database.Esqueleto as E
-import           Database.Esqueleto      ((^.), (==.))
+import Database.Esqueleto ((^.), (==.))
 
 getHomeR :: Handler Html
 getHomeR = do
@@ -24,8 +24,16 @@ getHomeR = do
                E.select $
                E.from $ \c -> do
                return c
-  render <- getUrlRender
-  meval <- maybeAuth
+  parameters :: [Entity Parameter] <- runDB $
+                E.select $
+                E.from $ \c -> do
+                return c
+  posts :: [Entity Post] <- runDB $
+           E.select $
+           E.from $ \c -> do
+           return c
+  -- render <- getUrlRender
+  -- meval <- maybeAuth
   defaultLayout $ do
     setTitle "Hola Mundo"
-    toWidget . preEscapedToHtml . renderText $ homePage customers
+    toWidget . preEscapedToHtml . renderText $ homePage customers parameters posts

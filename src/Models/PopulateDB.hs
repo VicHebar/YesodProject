@@ -46,34 +46,36 @@ script = db $ do
     parameterAlias = "Alberto",
     parameterElements = [Bk S1, He S2, Br P2]}
 --Here Populate Comment
-  commentVic <- insert $ Comment {
-    commentA = victor,
-    commentD = time,
-    commentT = "This is a comment from Vic"}
-  commentDaniel <- insert $ Comment {
-    commentA = daniel,
-    commentD = time,
-    commentT = "Thid is a comment from Daniel"}
-  commentAlberto <- insert $ Comment {
-    commentA = alberto,
-    commentD = time,
-    commentT = "This is a comment from Alberto"}
+  let
+    comVic = Comment {
+      commentA = victor,
+      commentD = time,
+      commentT = "This is a comment from Vic"}
+    comDani = Comment {
+      commentA = daniel,
+      commentD = time,
+      commentT = "Thid is a comment from Daniel"}
+    comAlbert = Comment {
+      commentA = alberto,
+      commentD = time,
+      commentT = "This is a comment from Alberto"}
+  _ <- insert $ comVic
+  _ <- insert $ comDani
+  _ <- insert $ comAlbert
 --Here populate Post
-  postVic <- insert $ Post {
+  _ <- insert $ Post {
     postP = parameterVic,
     postA = victor,
     postD = time,
-    postC = [commentVic, commentDaniel]}
-  postDaniel <- insert $ Post {
+    postC = [comVic, comDani]}
+  _ <- insert $ Post {
     postP = parameterDaniel,
     postA = daniel,
     postD = time,
-    postC = [commentDaniel, commentAlberto]}
-  postAlberto <- insert $ Post {
+    postC = [comDani, comAlbert]}
+  _ <- insert $ Post {
     postP = parameterAlberto,
     postA = alberto,
     postD = time,
-    postC = [commentAlberto, commentVic]}
+    postC = [comAlbert, comVic]}
   return ()
-
-holamundo = "Holamundo"
