@@ -51,6 +51,37 @@ homePage customers parameters posts= do
                -- forM_ parameters $ \p -> do
                --   tr_ $ do
                --     td_ [ align_ "left" ] $ toHtml (iddParameterT p)
+      button_ [ type_ "buton", class_ "btn btn-info", data_ "toggle" "modal", data_ "target" "#NewModal" ] "New Post"
+      div_ [ class_ "modal fade", id_ "NewModal", role_ "dialog" ] $ do
+        div_ [ class_ "modal-dialog" ] $ do
+          div_ [ class_ "modal-content" ] $ do
+            div_ [ class_ "modal-header" ] $ do
+              button_ [ type_ "button", class_ "close", data_ "dismiss" "modal" ] $ "c"
+              h4_ [ class_ "modal-title", id_ "myModalLabel", align_ "left" ] $ "New Post"
+            div_ [ class_ "modal-body" ] $ do
+              -- p_ [] "Aqui van a ir los formularios"
+              form_ [] $do
+                label_ [ for_ "paramId" ] $ "Parameter ID:"
+                br_ []
+                input_ [ type_ "text", id_ "paramId", name_ "paramIdN" ]
+                br_ []
+                label_ [ for_ "custId" ] "Customer ID:"
+                br_ []
+                input_ [ type_ "text", id_ "custId", name_ "custIdN" ]
+                br_ []
+                div_ [ class_ "panel-heading" ] $ do
+                  h3_ [ class_ "panel-title" ] "Make your comment"
+                  label_ [ for_ "custComId" ] "Customer Id for the Comment"
+                  br_ []
+                  input_ [ type_ "text", id_ "custComId", name_ "custComIdN" ]
+                  br_ []
+                  label_ [ for_ "comment" ] "Comment:"
+                  br_ []
+                  input_ [ type_ "text", id_ "comment", name_ "commentN" ]
+                br_ []
+                input_ [ type_ "submit", value_ "submit" ]
+            div_ [ class_ "modal-footer" ] $ do
+              button_ [ type_ "button", class_ "btn btn-default", data_ "dismiss" "modal" ] $ "Close"
 
 elementsPost :: [Entity Parameter] -> Entity Post -> Html ()
 elementsPost prmtrs pst = toHtml (T.pack elmnts)
