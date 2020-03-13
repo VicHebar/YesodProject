@@ -371,6 +371,7 @@ data Element = EmptyElement
 derivePersistField "Element"
 ~~~
 Y, de nuevo se encontrará en `./src/Models/ModelElement.hs`
+
 ## Github
 
 Github es un manejador de versiones, una herramienta que nos permitirá tener un control sobre el histórico de versiones de nuestro proyecto. Además de eso, Github nos permite compartir código con distintas personas, podríamos pensar en Github como una red social de programadores. El primer paso que tomaremos será crear una cuenta en Github, y para ello accederemos a [su página](https://github.com/), una vez dentro crearemos una cuenta nueva siguiendo los pasos marcados en la página, rellenándo los campos solicitados. Una vez que esté hecha nuestra cuenta podremos empezar a crear repositorios.
