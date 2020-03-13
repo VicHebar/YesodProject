@@ -37,30 +37,22 @@ homePage customers parameters posts= do
                 th_ "Comentario(s)"
                 th_ "Fecha/Hora"
             tbody_ $ do
-               -- forM_ customers $ \c -> do
-               --   tr_ $ do
-               --     td_ [ align_ "left" ] $ iddCustomer c
-               --     td_ [ align_ "left" ] $ identCustomer c
-               --     td_ [ align_ "left" ] $ passCustomer c
                forM_ posts $ \p -> do
                  tr_ $ do
                    td_ [ align_ "left" ] $ identCustomer (customerPost customers p)
                    td_ [ align_ "left" ] $ elementsPost parameters p --toHtml (parameterIdPostT p)
                    td_ [ align_ "left" ] $ toHtml ( T.pack (concatWords ([T.unpack s | s <- map commentT (commentsPost p)])))
                    td_ [ align_ "left" ] $ timePost p
-               -- forM_ parameters $ \p -> do
-               --   tr_ $ do
-               --     td_ [ align_ "left" ] $ toHtml (iddParameterT p)
       button_ [ type_ "buton", class_ "btn btn-info", data_ "toggle" "modal", data_ "target" "#NewModal" ] "New Post"
       div_ [ class_ "modal fade", id_ "NewModal", role_ "dialog" ] $ do
         div_ [ class_ "modal-dialog" ] $ do
           div_ [ class_ "modal-content" ] $ do
             div_ [ class_ "modal-header" ] $ do
-              button_ [ type_ "button", class_ "close", data_ "dismiss" "modal" ] $ "c"
+              button_ [ type_ "button", class_ "close", data_ "dismiss" "modal" ] $ "x"
               h4_ [ class_ "modal-title", id_ "myModalLabel", align_ "left" ] $ "New Post"
             div_ [ class_ "modal-body" ] $ do
               -- p_ [] "Aqui van a ir los formularios"
-              form_ [] $do
+              form_ [action_ "postHomR", method_ "Post" ] $do
                 label_ [ for_ "paramId" ] $ "Parameter ID:"
                 br_ []
                 input_ [ type_ "text", id_ "paramId", name_ "paramIdN" ]
@@ -71,17 +63,13 @@ homePage customers parameters posts= do
                 br_ []
                 div_ [ class_ "panel-heading" ] $ do
                   h3_ [ class_ "panel-title" ] "Make your comment"
-                  label_ [ for_ "custComId" ] "Customer Id for the Comment"
-                  br_ []
-                  input_ [ type_ "text", id_ "custComId", name_ "custComIdN" ]
-                  br_ []
                   label_ [ for_ "comment" ] "Comment:"
                   br_ []
                   input_ [ type_ "text", id_ "comment", name_ "commentN" ]
                 br_ []
-                input_ [ type_ "submit", value_ "submit" ]
             div_ [ class_ "modal-footer" ] $ do
-              button_ [ type_ "button", class_ "btn btn-default", data_ "dismiss" "modal" ] $ "Close"
+              button_ [ type_ "submit", value_ "submit", class_ "btn btn-primary", align_ "left" ] "Submit"
+              button_ [ type_ "button", class_ "btn btn-primary", data_ "dismiss" "modal" ] $ "Close"
 
 elementsPost :: [Entity Parameter] -> Entity Post -> Html ()
 elementsPost prmtrs pst = toHtml (T.pack elmnts)

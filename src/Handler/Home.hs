@@ -37,3 +37,22 @@ getHomeR = do
   defaultLayout $ do
     setTitle "Hola Mundo"
     toWidget . preEscapedToHtml . renderText $ homePage customers parameters posts
+
+postHomeR :: Handler Html
+postHomeR = do
+  time <- liftIO getCurrentTime
+  paramId <- runInputPost $ ireq intField "paramIdN"
+  custId <- runInputPost $ ireq intField "custIdN"
+  comment <- runInputPost $ ireq textField "custIdN"
+  param :: [Entity Parameter] <- runDB $
+                                  E.select $
+                                  E.from $ \p -> do
+                                  return p
+  custom :: [Entity Customer] <- runDB $
+                                  E.select $
+                                  E.from $ \c -> do
+                                  E.where_ (c ^. CustomerId E.==. custId)
+                                  return c
+  
+  getHomeR
+
