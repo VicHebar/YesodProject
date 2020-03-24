@@ -5,18 +5,18 @@ Esta es una guía detallada con pasos sencillos para configurar una computadora 
 Acontinuación se enlistan las secciones que contendrá la lista:
 
 1. Obtener e instalar Stack.
-2. Stack Templates
-3. Crear un Proyecto con Stack
-4. Compilar nuesta primera página con yesod
-    - Configurar nuestra base de datos
-    - Primera página
-    - Modificando nuestra primera página
-5. Nuestra segunda página
-    - Nuevas tablas para nuestra base de datos
-    - Creando los tipos necesarios
-    - Modificando nuestra base de datos
-    - Rellenando nuestras tablas
-    - Hacinedo uso de nuestras tablas.
+2. Stack Templates.
+3. Crear un Proyecto con Stack.
+4. Compilar nuesta primera página con yesod.
+    - Configurar nuestra base de datos.
+    - Primera página.
+    - Modificando nuestra primera página.
+5. Nuestra segunda página.
+    - Nuevas tablas para nuestra base de datos.
+    - Creando los tipos necesarios.
+    - Modificando nuestra base de datos.
+    - Rellenando nuestras tablas.
+    - Haciendo uso de nuestras tablas.
 
 ## Obtener e instalar Stack
 
@@ -129,7 +129,7 @@ Guardemos los cambios hechos y nos dirigiremos al siguiente archivo, package.yam
 - blaze-markup
 ~~~
 Una vez hecho esto nos dirigiremos a este [directorio de GitHub](https://github.com/VicHebar/YesodProject/tree/e886e75ea6d4fed1e0321ff2924c1ed7074da155/src/LucidTemplates) y descargaremos la carpeta **LucidTemplates**, esta carpeta contiene un template específico para nuestro Hola Mundo, una vez desgargada la carpeta, la guardaremos en el directorio de nuestro proyecto, en la carpeta *ToDeleteYesod/src*.  
-Posterior a estos pasos nos dirigiremos al directorio de nuestro proyecto, a la archivo *ToDeleteYesod/src/Handler/Home.hs*. Dentro de este archivo lo primero que haremos será sustituir todo el código que se encuentre antes de la línea que contiene *module Handler.Home where* por las siguientes líneas:  
+Posterior a estos pasos nos dirigiremos al directorio de nuestro proyecto, la archivo *ToDeleteYesod/src/Handler/Home.hs*. Dentro de este archivo lo primero que haremos será sustituir todo el código que se encuentre antes de la línea que contiene *module Handler.Home where* por las siguientes líneas:  
 ~~~ haskell
 {-# LANGUAGE NoImplicitPrelude          #-}
 {-# LANGUAGE DeriveDataTypeable         #-}
@@ -719,3 +719,304 @@ script = db $ do
   return ()
 ~~~
 Para poder ejecutar este script y poder rellenar nuestra base de datos tendremos que logear este script en ghci. Iremos desde una terminal a la raiz de nuestro proyecto, en nuestro caso `ToDeleteYesod/`, una vez allí, ejectutaremos el comando `stack ghci`, tras terminar de cargar todo lo que tenga que cargar escribiremos `:l src/Models/PopulateDB.hs` lo que lodeará nuestro módulo y podremos ejecutar la función script, para ellos escribiremos *script*, tras haber ejecutado la función podremos verificar que las tablas se rellenaron on exito desde el prompt de psql, para salir de ghci basta con ejecutar `:q`, una vez en el prompt de psql nos conectaremos con la base de datos y ejecutaremos la sentencia SQL `SELECT * FROM Customer;`, nos desplegará una tabla con todos los registros que posteriormente hemos introducido.
+
+### Haciendo uso de nuestras tablas
+
+La finalidad de llenar nuestras tablas es poder desplegar la información que ellas contienen en unformato legible dentro de nuestra página y para ello vaciaremos su contenido en tablas.  
+El primer paso será incluir la librería de Esqueleto que nos ayudará a hacer los request de SQL para poder extraer la información de la base de datos, para ello lo haremos de la misma manera que hemos importado anteriormente, iremos a *toDeleteYesod/package.yaml* e incluiremos la linea *- esqueleto* después iremos a *toDeleteYesod/src/Handler/Home.hs* y aquí incluiremos las líneas:  
+~~~ haskell
+import qualified Database.Esqueleto as E
+import Database.Esqueleto ((^.), (==.))
+~~~
+Una vez importado podremos desde el *Handler* poder extraer la información de la base de datos que hemos creado, para hacer la consulta a la base de datos tendremos que usar la siguiente indtrucción:  
+~~~ haskell
+variable :: tipo <- runDB $
+            E.select $
+            E.from $ \t -> do
+              return t
+~~~
+Como podemos ver la sintaxis para hacer consultas es bastante similar a como se haría en SQL. Ahora incluiremos este código para poder extraer la información de nustras tablas. La idea que tendremos en mente será poder dejar ver los post que se han registrado en la base de datos, entonces lo primero que haremos será extraer los post:  
+~~~ haskell
+getHomeR :: Handler Html
+getHomeR = do
+  posts [Entity Post] <- runDB $
+        E.select $
+        E.from $ \p -> do
+          return p
+  defaultLayout $ do
+    setTitle "Posts"
+    toWidget . preEscapedToHtml . renderText $ homePage
+~~~
+Pero los post no será la unica información que necesitaremos de la base de datos, ademas de los Post ocuparemos Customer y Parameter, (Esto ya que la tabla de Post almacena los Id de los Customer que los escribieron además de los Parameter a los que se refiere), así que al hacer todas las consultas necesarias tendremos el código siguiente:  
+~~~ haskell
+getHomeR :: Handler Html
+getHomeR = do
+  customers :: [Entity Customer] <- runDB $
+               E.select $
+               E.from $ \c -> do
+               return c
+  parameters :: [Entity Parameter] <- runDB $
+                E.select $
+                E.from $ \c -> do
+                return c
+  posts :: [Entity Post] <- runDB $
+           E.select $
+           E.from $ \c -> do
+           return c
+  defaultLayout $ do
+    setTitle "Hola Mundo!"
+    toWidget . preEscapedToHtml . renderText $ homePage
+~~~
+Es importante destacar que se están haciendo las consultas dentro de los handler ya que la función **runDB** es una función **monad Handler** y por ello no se podrá hacer consultas dentro de la función homePage.  
+Con las consultas hechas nuestro siguiente interés es pasar la información de las consultas a nustro homePage para poder mostrarla en la página, así pues las pasaremos como argumentos de la función homePage de la siguiente manera:  
+~~~ haskell
+toWidget . preEscapedToHtml . renderText $ homePage customers parameters posts
+~~~
+Y agregaremos los argumrntos a la función homePage en su definición con:  
+~~~ haskell
+homePage :: [Entity Customer] -> [Entity Parameter] -> [Entity Post] -> Html ()
+homePage customers parameters posts =  do
+~~~
+Ahora podremos empezar por modificar nustra finción para poder mostrar las consultas hechas. Empezaremos por crear una tabla, para ello agregaremos un div al código de nuestra función *homePage* (y de paso quitaremos el parrafo *p* que contenía el diálogo "Hola mundo!"), en este div meteremos el título de la tabla de la siguiente manera:  
+``` haskell
+div_ [ class_ "panel panel-default container" ] $ do
+  h3 [ class_ "panel panel-default" ] "Tabla de posts"
+```
+Y un div más en el que agregaremos la tabla que mostrará los posts que hemos incluido previamente:  
+``` haskell
+div_ [ class_ "panel-body container" ] $ do
+  table_ [ class_ "table table-responsive table-condensed table-sm" ] $ do
+    thead_ $ do
+      tr_ $ do
+        th_ "columna 1"
+        th_ "columna 2"
+        th_ "colunma 3"
+        th_ "columna 4"
+```
+Tras compilar lo escrito anterior obtendremos una tabla que solo contiene los titulos de las columnas, acomodemos la información anterior para poder mostrar *Autor* del post, *Parametros* a los que se refiere el post, *COmentarios* del post y la *Fecha y hora* en la que se subió el post, obteniendo el siguiente código:  
+``` haskell
+homePage :: [Entity Customer] -> [Entity Parameter] -> [Entity Post] -> Html ()
+homePage customers parameters posts =  do
+  toHtmlRaw "<!-- Products -->"
+  section_ [ class_ "about full-screen d-lg-flex justify-content-center align-items-center", id_ "products" ] $ do
+    -- div_ [ class_ "container" ] $ do
+    --   p_ [] "Post"
+      div_ [ class_ "panel panel-default container" ] $ do
+        h3_ [class_ "panel panel-default"] "Tabla de post"
+      div_ [ class_ "panel-body container" ] $ do
+        table_ [ class_ "table table-responsive table-condensed table-sm" ] $ do
+          thead_ $ do
+            tr_ $ do
+              th_ "Autor"
+              th_ "Parametros"
+              th_ "Comentarios"
+              th_ "Fechar/Hora"
+```
+Para poder llenar la tabla tendremos que crear ciertas funciones para facilitar la extracción de la información necesaria de las consultas anteriores, el primer reto será extraer los nombres de los autores de los post. Para ello crearemos la función **customer_Post** que como sunombre indica nos dirá, dado un post, cuál e su autor, la definición de la función será la siguente:  
+``` haskell
+customer_Post :: [Entity Customer] -> Entity Post -> Entity Customer
+customer_Post csts pst = cst
+  where
+    (cst:_) = filter (\c -> id_Customer c == customerId_Post pst) csts
+```
+Como podemos ver tendremos que hacer uso de otras dos funciones más que de momento no hemos definido, definamoslas. La primera función a definir de ellas será id_Customer que dado un customer nos dará su Id, la definición es la siguiente:  
+``` haskell
+id_Customer :: Entity Customer -> Int64
+id_Customer = fromSqlKey . entityKey
+```
+Y análogamente se definirá la función que nos entregará el Id del customer autor del post:  
+``` haskell
+customerId_Post :: Entity Post -> Int64
+customerId_Post = fromSqlKey . postA . entityVal
+```
+Una vez definida esta función necesitaremos poder extraer del Customer el nombre, para ello definiremos la función *ident_Customer* de la siguiente manera:  
+``` haskell
+ident_Customer :: Entity Customer -> Text
+ident_Customer = customerIdent . entityVal
+```
+Ahora armados con estas funciones podremos desplegar la primera columna de nuestra tabla. Para poder desplegar la primera columna habremos de iterar sobre los post con la función *forM_* que en realidad solo es un map sobre un conjunto de elementos. A la función forM_ le pasaremos como argumentos el conjunto sobre el cual iterar y la función a iterar sobre los elementos de la manera `forM_ elementos funcion`, para nuestro caso los elementos serán los posts y nuetra función que los va a iterar será una función que los acomode dentro de la tabla, así pues la definición será la siguiente:  
+``` haskell
+forM_ posts $ \p -> do
+  tr_ $ do
+    td_ [ align_ "left" ] $ toHtml $ ident_Customer $ customer_Post customers p
+```
+Esta función declarada en definición lambda nos indica que agrega un renglón a la tabla que incluye el nombre del customer que escribió el post **p**, estos renglones deben ser incluidos dentro del cuerpo de la tabla, para ello tendremos que meter este forM_ dentro de un **tbody_** para tener al final el siguiente resultado:  
+~~~ haskell
+homePage :: [Entity Customer] -> [Entity Parameter] -> [Entity Post] -> Html ()
+homePage customers parameters posts =  do
+  toHtmlRaw "<!-- Products -->"
+  section_ [ class_ "about full-screen d-lg-flex justify-content-center align-items-center", id_ "products" ] $ do
+    -- div_ [ class_ "container" ] $ do
+    --   p_ [] "Post"
+      div_ [ class_ "panel panel-default container" ] $ do
+        h3_ [class_ "panel panel-default"] "Tabla de post"
+      div_ [ class_ "panel-body container" ] $ do
+        table_ [ class_ "table table-responsive table-condensed table-sm" ] $ do
+          thead_ $ do
+            tr_ $ do
+              th_ "Autor"
+              th_ "Parametros"
+              th_ "Comentarios"
+              th_ "Fechar/Hora"
+          tbody_ $ do
+            forM_ posts $ \p -> do
+              tr_ $ do
+                td_ [ align_ "left" ] $ toHtml $ ident_Customer $ customer_Post customers p
+~~~
+Al compilar nuestra página modificada con la instrucción **stack exec -- yesod devel** Podremos ver que ahora nuestra tabla despliega los nombres de los customers *Victor* *Daniel* *Alberto*, lo siguiente por agregar serán los parametros del post y haremos algo similar con funciones parecidas:  
+~~~ haskell
+elements_Post :: [Entity Parameter] -> Entity Post -> Text
+elements_Post prmtrs pst = T.pack elmnts
+  where
+    elmnts = concatWords . map show . elements_Parameter . parameters_Post prmtrs $ pst
+
+concatWords :: [String] -> String
+concatWords = foldr addComa []
+
+addComa :: String -> String -> String
+addComa fs [] = fs ++ "."
+addComa fs sc = fs ++ ", " ++ sc
+
+elements_Parameter :: Entity Parameter -> [Models.ModelElement.Element]
+elements_Parameter = parameterElements . entityVal
+
+parameters_Post :: [Entity Parameter] -> Entity Post -> Entity Parameter
+parameters_Post prmtrs pst = parameters_from_pst
+  where
+    (parameters_from_pst:_) = filter (\p-> id_Parameter p == parameterId_Post pst) prmtrs
+
+parameterId_Post :: Entity Post -> Int64
+parameterId_Post = fromSqlKey . postP . entityVal
+
+id_Parameter :: Entity Parameter -> Int64
+id_Parameter = fromSqlKey . entityKey
+~~~
+En esta parte hay una pequeña diferencia, los elementos de Parameter son una lista de cosas de un tipo que nosotros creamos, para poder mostrarlo en pantall tendremos que hacer algunos pasos extra, el primero será pasar de Element a String, esto para poder darle un formato adecuado y poder mostrarlo en pantalla, definimos un par de funcioes que nos ayudarán a imprimir un par de comas separadoras y un punto final. Por utimo una función que nos permite componer todas estas funciones en una sola que nos regresa un Text con los elementos en el formato adecuado. Al utilizar estas funciones para imprimir nusestros elementos será  
+~~~ haskell
+forM_ posts $ \p -> do
+  tr_ $ do
+    td_ [ align_ "left" ] $ toHtml $ ident_Customer $ customer_Post customers p
+    td_ [ align_ "left" ] $ toHtml $ elements_Post parameters p
+~~~
+La manera de mostrar los comentarios del post es mucho más sencillo ya que los comentarios ya son Text, así que unicamente ocuparemos una función para extrar los Comment del post en cuestión, la función se define como:  
+~~~ haskell
+comments_Post :: Entity Post -> [Comment]
+comments_Post = postC . entityVal
+~~~
+Al usarla para mostrar los comentarios haremos uso de Listas de la siguiente manera:  
+~~~ haskell
+td_ [ align_ "left" ] $ toHtml $ T.pack $ concatWords [ T.unpack s | s <- map commentT (comments_Post p)]
+~~~
+La idea es generar una lista de los comentarios en String para poder concatenarlos con la función concatWords, regresarla a Text y mostrala en pantalla de la manera:  
+~~~ haskell
+forM_ posts $ \p -> do
+  tr_ $ do
+    td_ [ align_ "left" ] $ toHtml $ ident_Customer $ customer_Post customers p
+    td_ [ align_ "left" ] $ toHtml $ elements_Post parameters p
+    td_ [ align_ "left" ] $ toHtml $ T.pack $ concatWords [ T.unpack s | s <- map commentT (comments_Post p)]
+~~~
+Por ultimos extraeremos la hora y fecha de nustro post, al ser un dato plano que no depende de ninguna otra tabla será el dato más fácil de mostrar en pantalla.  
+~~~ haskell
+time_Post :: Entity Post -> Text
+time_Post = T.pack . take 19 . show . postD . entityVal
+~~~
+Por lo que su implementación será:  
+~~~ haskell
+forM_ posts $ \p -> do
+  tr_ $ do
+    td_ [ align_ "left" ] $ toHtml $ ident_Customer $ customer_Post customers p
+    td_ [ align_ "left" ] $ toHtml $ elements_Post parameters p
+    td_ [ align_ "left" ] $ toHtml $ T.pack $ concatWords [ T.unpack s | s <- map commentT (comments_Post p)]
+    td_ [ align_ "left" ] $ toHtml $ time_Post p
+~~~
+Al final nuestro archivo *HomeTemplate.hs* quedará como:  
+~~~ haskell
+{-# LANGUAGE ExtendedDefaultRules   #-}
+{-# LANGUAGE OverloadedStrings      #-}
+{-# LANGUAGE NoImplicitPrelude      #-}
+{-# LANGUAGE FlexibleInstances      #-}
+{-# LANGUAGE ScopedTypeVariables    #-}
+
+module LucidTemplates.HomeTemplate where
+
+import           Import hiding ((==.), for_, Html, toHtml, Builder)
+import qualified Lucid.Base as LucidBase
+import           Lucid
+import           Lucid.Supplemental
+import qualified Blaze.ByteString.Builder as Blaze
+import qualified Blaze.ByteString.Builder.Html.Utf8 as Blaze
+import           Blaze.ByteString.Builder (Builder)
+import           System.IO (stdout, hSetEncoding, utf8)
+import           Data.Text.Lazy.IO as L
+import qualified Data.Text as T
+import           Database.Persist.Sql ( fromSqlKey )
+import           Models.ModelElement
+
+homePage :: [Entity Customer] -> [Entity Parameter] -> [Entity Post] -> Html ()
+homePage customers parameters posts =  do
+  toHtmlRaw "<!-- Products -->"
+  section_ [ class_ "about full-screen d-lg-flex justify-content-center align-items-center", id_ "products" ] $ do
+    -- div_ [ class_ "container" ] $ do
+    --   p_ [] "Post"
+      div_ [ class_ "panel panel-default container" ] $ do
+        h3_ [class_ "panel panel-default"] "Tabla de post"
+      div_ [ class_ "panel-body container" ] $ do
+        table_ [ class_ "table table-responsive table-condensed table-sm" ] $ do
+          thead_ $ do
+            tr_ $ do
+              th_ "Autor"
+              th_ "Parametros"
+              th_ "Comentarios"
+              th_ "Fechar y Hora"
+          tbody_ $ do
+            forM_ posts $ \p -> do
+              tr_ $ do
+                td_ [ align_ "left" ] $ toHtml $ ident_Customer $ customer_Post customers p
+                td_ [ align_ "left" ] $ toHtml $ elements_Post parameters p
+                td_ [ align_ "left" ] $ toHtml $ T.pack $ concatWords [ T.unpack s | s <- map commentT (comments_Post p)]
+                td_ [ align_ "left" ] $ toHtml $ time_Post p
+
+time_Post :: Entity Post -> Text
+time_Post = T.pack . take 19 . show . postD . entityVal
+
+comments_Post :: Entity Post -> [Comment]
+comments_Post = postC . entityVal
+
+elements_Post :: [Entity Parameter] -> Entity Post -> Text
+elements_Post prmtrs pst = T.pack . concatWords . map show . elements_Parameter . parameters_Post prmtrs $ pst
+
+concatWords :: [String] -> String
+concatWords = foldr addComa []
+
+addComa :: String -> String -> String
+addComa fs [] = fs ++ "."
+addComa fs sc = fs ++ ", " ++ sc
+
+elements_Parameter :: Entity Parameter -> [Models.ModelElement.Element]
+elements_Parameter = parameterElements . entityVal
+
+parameters_Post :: [Entity Parameter] -> Entity Post -> Entity Parameter
+parameters_Post prmtrs pst = parameters_from_pst
+  where
+    (parameters_from_pst:_) = filter (\p-> id_Parameter p == parameterId_Post pst) prmtrs
+
+parameterId_Post :: Entity Post -> Int64
+parameterId_Post = fromSqlKey . postP . entityVal
+
+id_Parameter :: Entity Parameter -> Int64
+id_Parameter = fromSqlKey . entityKey
+
+ident_Customer :: Entity Customer -> Text
+ident_Customer = customerIdent . entityVal
+
+id_Customer :: Entity Customer -> Int64
+id_Customer = fromSqlKey . entityKey
+
+customerId_Post :: Entity Post -> Int64
+customerId_Post = fromSqlKey . postA . entityVal
+
+customer_Post :: [Entity Customer] -> Entity Post -> Entity Customer
+customer_Post csts pst = cst
+  where
+    (cst:_) = filter (\c -> id_Customer c == customerId_Post pst) csts
+~~~

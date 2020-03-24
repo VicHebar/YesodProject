@@ -51,8 +51,7 @@ homePage customers parameters posts= do
               button_ [ type_ "button", class_ "close", data_ "dismiss" "modal" ] $ "x"
               h4_ [ class_ "modal-title", id_ "myModalLabel", align_ "left" ] $ "New Post"
             div_ [ class_ "modal-body" ] $ do
-              -- p_ [] "Aqui van a ir los formularios"
-              form_ [action_ "postHomR", method_ "Post" ] $do
+              form_ [action_ "http://localhost:3000/postHomeR", method_ "Post" ] $do
                 label_ [ for_ "paramId" ] $ "Parameter ID:"
                 br_ []
                 input_ [ type_ "text", id_ "paramId", name_ "paramIdN" ]
@@ -77,7 +76,7 @@ elementsPost prmtrs pst = toHtml (T.pack elmnts)
     elmnts = concatWords (map show (elementsPostL prmtrs pst))
 
 concatWords :: [String] -> String
-concatWords [] = ""
+concatWords [wd] = wd ++ "."
 concatWords (wd:wds) = wd ++ ", " ++ (concatWords wds)
 
 elementsPostL :: [Entity Parameter] -> Entity Post -> [Models.ModelElement.Element]

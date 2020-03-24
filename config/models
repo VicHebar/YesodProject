@@ -20,3 +20,5 @@ Comment
     a CustomerId
     d UTCTime
     t Text
+Randtable
+    sometext Text
